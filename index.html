@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <title>松山市長選 候補マッチ｜質問に答えるだけで、あなたに近い2人がわかる</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --navy: #16235c;
+        --navy-deep: #101a45;
+        --navy-card: #1e2f6e;
+        --paper: #ffffff;
+        --paper-soft: #eef1fa;
+        --ink: #17203f;
+        --ink-soft: #5a6484;
+        --line: #d7dcea;
+        --yellow: #ffd23e;
+        --yellow-ink: #17203f;
+        --tile-k: #f2a93b;
+        --tile-t: #2ea88a;
+        --tile-n: #e05b4b;
+        --green: #1c7a52;
+        --green-soft: #e3f2ea;
+        --radius: 18px;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+      body { margin: 0; background: var(--navy); color: #fff; font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", sans-serif; line-height: 1.75; -webkit-font-smoothing: antialiased; font-size: 16px; }
+      .round { font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Noto Sans JP", sans-serif; }
+      .wrap { max-width: 880px; margin: 0 auto; padding: 0 18px 60px; }
+      a { color: var(--green); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+      h1, h2, h3 { line-height: 1.35; margin: 0; } p { margin: 0; } button { font: inherit; }
+      .hidden { display: none !important; }
+
+      /* ---------- HERO ---------- */
+      .hero { min-height: calc(100svh - 40px); display: flex; flex-direction: column; padding: 26px 0 10px; }
+      .date-chip { align-self: flex-start; background: #fff; color: var(--navy); border-radius: 999px; padding: 6px 16px; font-weight: 800; font-size: 0.9rem; }
+      .hero h1 { font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif; font-size: clamp(2.3rem, 10.5vw, 3.8rem); font-weight: 900; line-height: 1.25; margin: 26px 0 0; letter-spacing: .01em; }
+      .hero h1 .q { color: var(--yellow); }
+      .hero-sub { margin-top: 14px; font-size: 1.05rem; font-weight: 500; color: #c9d2f2; }
+      .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 30px; }
+      .trio .person { border-radius: var(--radius); padding: 18px 12px 14px; text-align: center; color: #fff; }
+      .trio .person.k { background: var(--tile-k); }
+      .trio .person.t { background: var(--tile-t); }
+      .trio .person.n { background: var(--tile-n); }
+      .trio .avatar { width: 58px; height: 58px; margin: 0 auto 8px; border-radius: 50%; background: rgba(255,255,255,.92); display: flex; align-items: center; justify-content: center; font-family: "M PLUS Rounded 1c", sans-serif; font-size: 1.6rem; font-weight: 900; }
+      .trio .person.k .avatar { color: #9a6405; }
+      .trio .person.t .avatar { color: #0d6a52; }
+      .trio .person.n .avatar { color: #a02c1e; }
+      .trio .pname { font-weight: 900; font-size: 1.02rem; line-height: 1.4; }
+      .trio .prole { font-size: 0.78rem; font-weight: 500; opacity: .92; line-height: 1.5; }
+      .hero .count { margin-top: 20px; font-weight: 800; font-size: 1rem; color: var(--yellow); text-align: center; min-height: 1.6em; }
+      .hero-foot { margin-top: auto; padding-top: 22px; padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
+      .start-btn { display: block; width: min(480px, 100%); margin: 0 auto; background: var(--yellow); color: var(--yellow-ink); border: none; cursor: pointer; padding: 20px 24px 16px; border-radius: 999px; text-align: center; }
+      .start-btn .sb-main { display: block; font-family: "M PLUS Rounded 1c", sans-serif; font-weight: 900; font-size: 1.6rem; line-height: 1.25; }
+      .start-btn .sb-sub { display: block; font-weight: 700; font-size: 0.85rem; margin-top: 2px; opacity: .75; }
+      .start-btn:active { transform: translateY(2px); }
+
+      /* ---------- QUIZ ---------- */
+      #quiz-sec { padding-top: 22px; }
+      .quiz-card { background: var(--paper); color: var(--ink); border-radius: 24px; padding: 26px 20px 20px; max-width: 640px; margin: 0 auto; }
+      .quiz-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .quiz-count { font-family: "M PLUS Rounded 1c", sans-serif; font-weight: 800; font-size: 0.95rem; color: var(--ink-soft); white-space: nowrap; }
+      .dots { display: flex; gap: 7px; }
+      .dots span { width: 11px; height: 11px; border-radius: 50%; background: var(--line); }
+      .dots span.done { background: var(--navy); }
+      .dots span.now { background: var(--yellow); outline: 2px solid var(--navy); outline-offset: 1px; }
+      .quiz-mutter { margin-top: 16px; display: inline-block; background: var(--paper-soft); color: var(--ink-soft); border-radius: 999px; padding: 4px 14px; font-size: 0.88rem; font-weight: 700; }
+      .quiz-q { font-family: "M PLUS Rounded 1c", sans-serif; font-size: clamp(1.35rem, 5.4vw, 1.65rem); font-weight: 800; line-height: 1.55; margin: 14px 0 20px; }
+      .quiz-opts { display: grid; gap: 11px; }
+      .quiz-opt { text-align: left; width: 100%; cursor: pointer; background: var(--paper); border: 2.5px solid var(--line); color: var(--ink); border-radius: 16px; padding: 16px 18px; font-size: 1.02rem; font-weight: 700; line-height: 1.55; min-height: 58px; }
+      .quiz-opt:active { transform: translateY(1px); }
+      .quiz-opt.picked { background: var(--navy); border-color: var(--navy); color: #fff; }
+      .quiz-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 8px; }
+      .quiz-back { background: none; border: none; color: var(--ink-soft); font-weight: 700; cursor: pointer; font-size: 0.92rem; padding: 8px 4px; min-height: 44px; visibility: hidden; }
+      .quiz-back.show { visibility: visible; }
+      .quiz-time { font-size: 0.82rem; color: var(--ink-soft); text-align: right; }
+
+      .thinking { padding: 34px 6px 28px; text-align: center; }
+      .think-dots { display: flex; gap: 9px; justify-content: center; margin-bottom: 20px; }
+      .think-dots span { width: 14px; height: 14px; border-radius: 50%; background: var(--line); animation: blink 1s infinite steps(1); }
+      .think-dots span:nth-child(2) { animation-delay: .2s; }
+      .think-dots span:nth-child(3) { animation-delay: .4s; }
+      @keyframes blink { 0%, 100% { background: var(--line); } 50% { background: var(--navy); } }
+      .think-msg { font-family: "M PLUS Rounded 1c", sans-serif; font-weight: 800; font-size: 1.2rem; min-height: 1.8em; }
+      .think-sub { color: var(--ink-soft); font-size: 0.9rem; margin-top: 4px; }
+
+      /* ---------- RESULT ---------- */
+      #result-sec { display: none; padding-top: 22px; }
+      #result-sec.show { display: block; }
+      .result-card { max-width: 680px; margin: 0 auto; background: var(--paper); color: var(--ink); border-radius: 24px; padding: 26px 20px 22px; }
+      .you-type { display: inline-block; background: var(--navy); color: #fff; border-radius: 999px; padding: 5px 16px; font-family: "M PLUS Rounded 1c", sans-serif; font-weight: 800; font-size: 0.92rem; }
+      .result-card .r-lead { margin-top: 14px; color: var(--ink-soft); font-weight: 500; font-size: 0.98rem; }
+      .result-card .r-title { font-family: "M PLUS Rounded 1c", sans-serif; font-size: clamp(1.4rem, 5.4vw, 1.75rem); font-weight: 900; margin-top: 8px; line-height: 1.45; }
+      .result-card .gap-note { margin-top: 8px; font-size: 0.94rem; color: var(--ink-soft); }
+      .top2 { display: grid; gap: 14px; margin-top: 20px; }
+      @media (min-width: 640px) { .top2 { grid-template-columns: 1fr 1fr; } }
+      .cand-card { border-radius: 20px; padding: 20px 18px 18px; position: relative; color: #fff; }
+      .cand-card.k { background: var(--tile-k); }
+      .cand-card.t { background: var(--tile-t); }
+      .cand-card.n { background: var(--tile-n); }
+      .rank-badge { display: inline-flex; align-items: center; gap: 6px; font-family: "M PLUS Rounded 1c", sans-serif; font-weight: 900; font-size: 0.9rem; padding: 4px 14px; border-radius: 999px; background: rgba(255,255,255,.94); }
+      .cand-card.k .rank-badge { color: #9a6405; }
+      .cand-card.t .rank-badge { color: #0d6a52; }
+      .cand-card.n .rank-badge { color: #a02c1e; }
+      .rank-badge .rank-note { font-weight: 700; font-size: 0.78rem; }
+      .cand-card .chead { display: flex; align-items: center; gap: 13px; margin-top: 14px; }
+      .cand-card .avatar { width: 56px; height: 56px; flex: none; border-radius: 50%; background: rgba(255,255,255,.92); display: flex; align-items: center; justify-content: center; font-family: "M PLUS Rounded 1c", sans-serif; font-size: 1.5rem; font-weight: 900; }
+      .cand-card.k .avatar { color: #9a6405; }
+      .cand-card.t .avatar { color: #0d6a52; }
+      .cand-card.n .avatar { color: #a02c1e; }
+      .cand-card .c-name { font-family: "M PLUS Rounded 1c", sans-serif; font-size: 1.5rem; font-weight: 900; line-height: 1.3; }
+      .cand-card .c-meta { font-size: 0.8rem; line-height: 1.6; opacity: .95; margin-top: 8px; }
+      .r-match { display: flex; align-items: baseline; gap: 8px; margin-top: 12px; }
+      .r-match .num { font-family: "M PLUS Rounded 1c", sans-serif; font-size: 2.6rem; font-weight: 900; line-height: 1; }
+      .r-match .num small { font-size: 1.2rem; }
+      .r-match .lab { font-weight: 800; font-size: 0.9rem; opacity: .9; }
+      .bar { height: 10px; background: rgba(255,255,255,.35); border-radius: 999px; margin-top: 10px; overflow: hidden; }
+      .bar > div { height: 100%; background: #fff; border-radius: 999px; transition: width .5s ease; }
+      .r-catch { font-weight: 900; font-size: 0.98rem; margin-top: 14px; line-height: 1.6; }
+      .r-reasons { background: rgba(255,255,255,.94); color: var(--ink); border-radius: 14px; padding: 14px 16px; margin-top: 14px; }
+      .r-reasons .rr-title { font-size: 0.82rem; font-weight: 900; margin-bottom: 6px; color: var(--ink-soft); }
+      .r-reasons ul { margin: 0; padding-left: 1.15em; }
+      .r-reasons li { font-size: 0.92rem; margin: 5px 0; }
+      .r-reasons li .echo { font-weight: 900; }
+      .cand-card .c-pkg { margin-top: 12px; font-size: 0.84rem; }
+      .cand-card .c-pkg a { color: #fff; font-weight: 800; }
+      .think-box { background: var(--paper-soft); border-radius: 16px; padding: 18px; margin-top: 18px; }
+      .think-box h3 { font-family: "M PLUS Rounded 1c", sans-serif; font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
+      .think-box p, .think-box li { font-size: 0.94rem; }
+      .think-box ul { margin: 8px 0 0; padding-left: 1.15em; }
+      .think-box li { margin: 5px 0; }
+      .r-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .r-actions .btn-main { background: var(--green); color: #fff; border: none; cursor: pointer; text-decoration: none; font-family: "M PLUS Rounded 1c", sans-serif; font-weight: 800; padding: 14px 26px; border-radius: 999px; font-size: 1.02rem; min-height: 54px; display: inline-flex; align-items: center; }
+      .r-actions .btn-sub { background: var(--paper); color: var(--ink); border: 2.5px solid var(--line); cursor: pointer; font-weight: 800; padding: 12px 22px; border-radius: 999px; font-size: 0.95rem; min-height: 54px; }
+      .r-shot { margin-top: 14px; font-size: 0.88rem; color: var(--ink-soft); }
+      .third-line { max-width: 680px; margin: 14px auto 0; font-size: 0.9rem; color: #c9d2f2; background: var(--navy-card); border-radius: 14px; padding: 12px 16px; }
+      .third-line b { color: #fff; }
+      .vote-mini { max-width: 680px; margin: 16px auto 0; background: var(--green-soft); color: var(--ink); border-radius: 20px; padding: 22px 20px; }
+      .vote-mini h3 { font-family: "M PLUS Rounded 1c", sans-serif; font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; }
+      .vote-mini p { font-size: 0.95rem; }
+      .vote-mini .vm-date { font-weight: 900; color: var(--green); font-size: 1.05rem; }
+      .vote-mini a.btn-official { display: inline-block; margin-top: 14px; background: #fff; border: 2.5px solid var(--green); color: var(--green); text-decoration: none; font-weight: 800; font-size: 0.92rem; padding: 11px 20px; border-radius: 999px; min-height: 48px; }
+
+      /* ---------- FOLDS ---------- */
+      section.fold-sec { margin-top: 16px; max-width: 680px; margin-left: auto; margin-right: auto; }
+      section.fold-sec:first-of-type { margin-top: 34px; }
+      .fold-head { display: flex; align-items: center; gap: 12px; cursor: pointer; list-style: none; background: var(--navy-card); color: #fff; border-radius: 16px; padding: 14px 18px; min-height: 56px; -webkit-tap-highlight-color: transparent; }
+      .fold-head::-webkit-details-marker { display: none; }
+      .fold-title { flex: 1; font-family: "M PLUS Rounded 1c", sans-serif; font-size: 1rem; font-weight: 800; line-height: 1.45; }
+      .fold-arrow { flex: none; font-weight: 900; transition: transform .2s ease; }
+      details[open] .fold-arrow { transform: rotate(180deg); }
+      .fold-body { background: var(--paper); color: var(--ink); border-radius: 16px; padding: 20px; margin-top: 10px; }
+      .fold-body .sec-sub { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 16px; }
+      .cmp { display: grid; gap: 14px; }
+      .cmp-card { border: 2px solid var(--line); border-radius: 14px; padding: 16px; }
+      .cmp-card h3 { font-family: "M PLUS Rounded 1c", sans-serif; font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
+      .cmp-row { display: grid; grid-template-columns: 84px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 0.92rem; }
+      .cmp-row:first-of-type { border-top: none; }
+      .cmp-row .who { font-weight: 900; }
+      .cmp-row .who small { display: block; font-weight: 700; color: var(--ink-soft); font-size: 0.74rem; letter-spacing: 1px; }
+      .vote-steps { display: grid; gap: 12px; margin-top: 6px; }
+      @media (min-width: 640px) { .vote-steps { grid-template-columns: 1fr 1fr; } }
+      .vote-box { background: var(--paper-soft); border-radius: 12px; padding: 16px 18px; }
+      .vote-box .vb-date { font-family: "M PLUS Rounded 1c", sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--green); }
+      .vote-box p { font-size: 0.92rem; color: var(--ink-soft); }
+      .fold-body ul.tips { margin: 14px 0 0; padding-left: 1.2em; font-size: 0.94rem; }
+      .official-links { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 16px; }
+      .official-links a { background: #fff; border: 2.5px solid var(--green); color: var(--green); text-decoration: none; font-weight: 800; font-size: 0.88rem; padding: 9px 16px; border-radius: 999px; min-height: 44px; display: inline-flex; align-items: center; }
+      .method { font-size: 0.92rem; color: var(--ink-soft); }
+      .method ul { margin: 6px 0 0; padding-left: 1.2em; }
+      .method li { margin: 5px 0; }
+      .sources { margin-top: 16px; font-size: 0.88rem; color: var(--ink-soft); }
+      .sources li { margin: 4px 0; }
+      footer { max-width: 680px; margin: 36px auto 0; font-size: 0.82rem; color: #8d99c4; padding-top: 14px; border-top: 1px solid var(--navy-card); }
+
+      /* ---------- STICKY VOTE BAR (result only) ---------- */
+      .sticky-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--navy-deep); }
+      .sticky-bar .sb-btn { display: block; width: min(560px, 100%); margin: 0 auto; text-align: center; background: var(--green); color: #fff; text-decoration: none; padding: 13px 20px 11px; border-radius: 999px; font-family: "M PLUS Rounded 1c", sans-serif; font-weight: 800; font-size: 1.12rem; line-height: 1.3; min-height: 56px; }
+      .sticky-bar .sb-btn span { display: block; font-size: 0.78rem; font-weight: 700; opacity: .92; margin-top: 1px; font-family: "Noto Sans JP", sans-serif; }
+      body.has-sticky { padding-bottom: 92px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <!-- ================= HERO ================= -->
+      <header class="hero" id="hero">
+        <span class="date-chip">松山市長選挙 ・ 投票日 11月15日（日）</span>
+        <h1>あなたに近いのは、<br /><span class="q">どっち？</span></h1>
+        <p class="hero-sub">暮らしの質問7つ。タップで答えるだけ、約1分。</p>
+        <div class="trio" aria-label="立候補予定者3人">
+          <div class="person k">
+            <div class="avatar">木</div>
+            <div class="pname">木下 豪</div>
+            <div class="prole">新人 ・ 44歳</div>
+          </div>
+          <div class="person t">
+            <div class="avatar">田</div>
+            <div class="pname">田中 エリナ</div>
+            <div class="prole">新人 ・ 42歳</div>
+          </div>
+          <div class="person n">
+            <div class="avatar">中</div>
+            <div class="pname">中野 泰誠</div>
+            <div class="prole">新人 ・ 44歳</div>
+          </div>
+        </div>
+        <p class="count" id="countdown"></p>
+        <div class="hero-foot">
+          <button type="button" class="start-btn" id="startBtn"><span class="sb-main">診断スタート！</span><span class="sb-sub">7つの質問 ・ 約1分 ・ 登録なし</span></button>
+        </div>
+      </header>
+
+      <!-- ================= QUIZ ================= -->
+      <section id="quiz-sec" class="hidden">
+        <div class="quiz-card" id="quizCard">
+          <div id="quizMain">
+            <div class="quiz-top">
+              <div class="quiz-count" id="quizCount">質問 1 / 7</div>
+              <div class="dots" id="quizDots" aria-hidden="true"></div>
+            </div>
+            <p class="quiz-mutter" id="quizMutter">まずは気軽にどうぞ。</p>
+            <h2 class="quiz-q" id="quizQ"></h2>
+            <div class="quiz-opts" id="quizOpts"></div>
+            <div class="quiz-foot">
+              <button type="button" class="quiz-back" id="quizBack">← ひとつ戻る</button>
+              <span class="quiz-time">正解はありません。思ったままでOK</span>
+            </div>
+          </div>
+          <div id="quizThink" class="thinking hidden" aria-live="polite">
+            <div class="think-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <p class="think-msg" id="thinkMsg">あなたの答えを集計しています…</p>
+            <p class="think-sub">3人の公約と、ひとつずつ見比べています</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= RESULT ================= -->
+      <section id="result-sec">
+        <div class="result-card" id="resultCard"></div>
+        <div id="runners"></div>
+        <div class="vote-mini">
+          <h3>決めきれなくても、投票には行けます</h3>
+          <p>1位と2位で迷ったままでも大丈夫です。どちらにするかは、家で考えても、投票所へ向かう途中で考えても構いません。大事なのは、名前を当てることではなく、あなた自身の考えで一票を入れることです。</p>
+          <p style="margin-top:8px;"><span class="vm-date">期日前投票は 11月9日（月）〜14日（土）</span>　当日（11月15日）忙しい人は、買い物のついでに寄れる場所もあります。持ち物は入場券だけ。</p>
+          <a class="btn-official" href="https://www.city.matsuyama.ehime.jp/shisei/senkyo/senkyotohyo/kijituzen.html" target="_blank" rel="noopener">期日前投票の場所・時間をみる（市公式）</a>
+        </div>
+      </section>
+
+      <!-- ================= COMPARE ================= -->
+      <section class="fold-sec">
+        <details class="fold">
+          <summary class="fold-head"><span class="fold-title">1位と2位で迷ったら：3人をならべて見る</span><span class="fold-arrow" aria-hidden="true">▾</span></summary>
+          <div class="fold-body">
+            <p class="sec-sub">結果の1位・2位は「考えるための絞り込み」です。テーマごとに、3人が実際に掲げている約束を並べました（●は約束の具体さ・広さの目安）。2人の違いが気になるところだけ読めばOKです。</p>
+            <div class="cmp" id="compare"></div>
+          </div>
+        </details>
+      </section>
+
+      <!-- ================= VOTE ================= -->
+      <section class="fold-sec">
+        <details class="fold">
+          <summary class="fold-head"><span class="fold-title">投票のしかた（5分で終わります）</span><span class="fold-arrow" aria-hidden="true">▾</span></summary>
+          <div class="fold-body">
+            <p class="sec-sub">当日でも、期日前でも、手続きは同じくらい簡単です。</p>
+            <div class="vote-steps">
+              <div class="vote-box">
+                <div class="vb-date">11月15日（日）当日</div>
+                <p>午前7時〜午後8時。入場券に書かれた投票所へ。</p>
+              </div>
+              <div class="vote-box">
+                <div class="vb-date">期日前：11月9日（月）〜14日（土）</div>
+                <p>市役所や支所、商業施設などで投票できます。場所によって開く期間・時間が違うので、市の案内で確認を。</p>
+              </div>
+            </div>
+            <ul class="tips">
+              <li>持ち物は<strong>投票所入場券</strong>だけ。なくしても、本人確認ができれば投票できます。</li>
+              <li>同じ日に愛媛県知事選挙もありますが、市長選の期日前投票は<strong>11月9日から</strong>です（知事選とは始まる日が違います）。</li>
+              <li>最終確認は、11月11日〜13日に各家庭へ届く予定の<strong>選挙公報</strong>で。</li>
+            </ul>
+            <div class="official-links">
+              <a href="https://www.city.matsuyama.ehime.jp/shisei/senkyo/senkyochiji/r8chijisityo_annnai.html" target="_blank" rel="noopener">市の選挙案内（公式）</a>
+              <a href="https://www.city.matsuyama.ehime.jp/shisei/senkyo/senkyotohyo/kijituzen.html" target="_blank" rel="noopener">期日前投票の場所・時間（公式）</a>
+              <a href="https://www.city.matsuyama.ehime.jp/shisei/senkyo/senkyotohyo/kouhosyakouhou.html" target="_blank" rel="noopener">候補者情報・選挙公報（公式）</a>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- ================= METHOD ================= -->
+      <section class="fold-sec">
+        <details class="fold">
+          <summary class="fold-head"><span class="fold-title">診断のしくみ・出典（種明かし）</span><span class="fold-arrow" aria-hidden="true">▾</span></summary>
+          <div class="fold-body">
+            <div class="method">
+              <ul>
+                <li>いまは告示前（11月8日告示）のため、3人とも正式には「立候補予定者」です。載せている公約は、各候補の公式発表をもとにしています。</li>
+                <li>7つの質問は、暮らしの7テーマ（おサイフ／子育て・教育／病院・介護／仕事・給料／安心・防災／税金の使い方／まちのにぎわい）につながっています。答えるたびに、あなたが大事にしているテーマが裏側で数えられます。</li>
+                <li>候補ごとの点数は、各テーマの公約を「具体的な約束があるか」「数字や期限が示されているか」「対象が幅広いか」で0〜5点に整理したものです（2026年11月1日に各候補の公式サイト・政策集を確認）。マッチ度は、あなたの答えから読み取った大事度とこの点数を掛け合わせて計算しています（何度も選んだテーマほど、結果に強く反映されます）。</li>
+                <li>公約の数が多い候補は点が高くなりやすい作りです。「約束が多い＝あなたに得」とは限りません。結果の理由に引いた公約はすべて実在のもので、上の比較表でも確認できます。</li>
+                <li>結果では、あえて1人だけを「答え」として決めず、あなたの考えに近い1位と2位の両方を並べています。点数の近さや、2人の約束の違いを見て、最後はあなた自身が考えるための材料にするためです。</li>
+                <li>このページは特定の候補を応援するものではありません。診断は「考えるきっかけ」として使ってください。大事なのは診断の当否ではなく、あなたが投票することです。</li>
+              </ul>
+              <div class="sources">
+                <p style="font-weight:900; color: var(--ink);">出典（2026年11月1日確認）</p>
+                <ul>
+                  <li>木下豪 公式サイト「ごうの政策」全20項目 ― <a href="https://kinoshitago.jp/" target="_blank" rel="noopener">kinoshitago.jp</a></li>
+                  <li>田中エリナ 公式サイト「2030年ビジョン・8つの重点政策」全82項目 ― <a href="https://tanakaerina.com/" target="_blank" rel="noopener">tanakaerina.com</a></li>
+                  <li>中野泰誠 政策ビジョン「100の約束」 ― <a href="https://vision.taiseinakano.com/policy" target="_blank" rel="noopener">vision.taiseinakano.com</a></li>
+                  <li>日程・投票方法 ― 松山市公式サイト「愛媛県知事選挙及び松山市長選挙のご案内」</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <footer>松山市長選挙2026 候補マッチ（市長選挙のみを対象にした非公式ページです）</footer>
+    </div>
+
+    <!-- sticky CTA: 結果表示後のみ、投票の準備 -->
+    <div class="sticky-bar hidden" id="stickyBar">
+      <a class="sb-btn" id="stickyVote" href="https://www.city.matsuyama.ehime.jp/shisei/senkyo/senkyotohyo/kijituzen.html" target="_blank" rel="noopener">投票の準備をする<span>期日前投票は11月9日（月）から ・ 場所と時間を確認</span></a>
+    </div>
+
+    <script>
+      // ---------- data ----------
+      var TOPICS = [
+        { id: "wallet", name: "おサイフ", type: "おサイフ防衛タイプ" },
+        { id: "kids", name: "子育て・教育", type: "家族いちばんタイプ" },
+        { id: "health", name: "病院・介護", type: "安心だいじタイプ" },
+        { id: "work", name: "仕事・給料", type: "がんばる働き手タイプ" },
+        { id: "safety", name: "安心・防災", type: "備え上手タイプ" },
+        { id: "cityhall", name: "税金の使い方", type: "きっちり見張るタイプ" },
+        { id: "town", name: "まちのにぎわい", type: "まち大好きタイプ" }
+      ];
+
+      var CANDS = [
+        {
+          id: "kinoshita", name: "木下 豪", short: "木下", initial: "木", tile: "k",
+          meta: "44歳 ・ 無所属 ・ 新人 ／ 元・四国電力送配電の情報通信技術者（20年以上、災害対応の実務経験）",
+          catch: "「派手な施設より、毎日の暮らしの足元を固める」現場派。",
+          one: "買い物の負担と、道路・水道など生活インフラを最優先する人",
+          pkg: "公約20項目（5つの柱）",
+          site: "https://kinoshitago.jp/", siteLabel: "木下豪 公式サイト",
+          scores: { wallet: 5, kids: 2, health: 3, work: 2, safety: 5, cityhall: 4, town: 2 },
+          promises: {
+            wallet: "全市民に市内で使える割引券を配り、消費税相当分の負担軽減をめざす（看板政策）",
+            kids: "「子育てにかかるお金と心の負担を軽く」と掲げる（具体策の内訳はこれから）",
+            health: "相談・申請をわかりやすくし、必要な支援を確実に届ける。高齢者と支える家族の安心を掲げる",
+            work: "割引券で日々の買い物を支え、市内のお店と地域経済を元気にする",
+            safety: "城山の土砂崩れに市長参加の住民説明会を「時間・回数無制限」で。大型施設より道路・水道・学校の整備・補修を優先",
+            cityhall: "国・県の補助金を取りに行く専門部署を新設。市民の負担増に頼らない財源確保",
+            town: "JR松山駅周辺について6つの再開発案を自分でまとめて公開"
+          }
+        },
+        {
+          id: "tanaka", name: "田中 エリナ", short: "田中", initial: "田", tile: "t",
+          meta: "42歳 ・ 無所属 ・ 新人 ／ 前・松山市議（2期ともトップ当選）。マーケティング会社を起業した経営者でもある",
+          catch: "「まず子育てと所得。数字で目標を出す」経営派。",
+          one: "子育て支援と「市民所得10％アップ」を数字で約束する人",
+          pkg: "公約82項目（2030年ビジョン）",
+          site: "https://tanakaerina.com/", siteLabel: "田中エリナ 公式サイト",
+          scores: { wallet: 3, kids: 5, health: 3, work: 5, safety: 4, cityhall: 5, town: 5 },
+          promises: {
+            wallet: "医療・介護などの暮らしの負担を総点検し、給付の「取りこぼしゼロ」をめざす",
+            kids: "0〜2歳児の保育料を4年間で無償化。病児保育の無償化、子育てチケット、市独自の児童相談所（2029年度開設目標）",
+            health: "介護する家族を支える（レスパイト受入枠・家族相談・ヤングケアラー支援）、在宅介護サービスの充実",
+            work: "市民所得10％以上アップが目標。地元企業への市発注率アップ、売上100億円を狙う地元企業を支援",
+            safety: "城山土砂災害は第三者委員会で原因と行政対応を検証し、結果と再発防止策を公開。AIデマンドタクシーで移動の足も",
+            cityhall: "全事業をゼロベースで見直し、重点政策は就任100日以内に工程表を作って進捗を公表",
+            town: "銀天街・大街道の空き店舗ゼロ（4年間）、JR松山駅前を「滞在したくなる場所」に、観光消費額1,000億円規模"
+          }
+        },
+        {
+          id: "nakano", name: "中野 泰誠", short: "中野", initial: "中", tile: "n",
+          meta: "44歳 ・ 無所属 ・ 新人 ／ 元・愛媛県議（2期）。元・電通、地域活性化のコンサル会社代表",
+          catch: "「約束の数がいちばん多く、医療と防災に厚い」計画派。",
+          one: "救急医療に5億円、防災士15,000人。約束の幅がいちばん広い人",
+          pkg: "政策集「100の約束」",
+          site: "https://vision.taiseinakano.com/policy", siteLabel: "中野泰誠 政策ページ",
+          scores: { wallet: 3, kids: 5, health: 5, work: 5, safety: 5, cityhall: 5, town: 4 },
+          promises: {
+            wallet: "急な物価高への支援は「対象・期間・財源・終わる条件」まで決めてから行う、と明記",
+            kids: "妊娠〜産後ケアの充実、保育士の確保と待機児童対策、放課後児童クラブの拡充、不登校支援まで幅広く",
+            health: "救急医療支援5億円で二次救急と夜間・休日の受け入れ体制を強化。医師・看護師の確保も支援",
+            work: "市民所得「4年で1.5倍」を掲げ、企業誘致、スタートアップ100社創出、学び直しから就職までを支援",
+            safety: "防災士15,000人育成、避難所の点検・優先改修、河川改修。城山は説明・生活再建・再発防止まで",
+            cityhall: "「書かない窓口」と手続きのオンライン化で待ち時間を削減。「財源のない政策は語らない」と明記",
+            town: "堀之内公園に大型イベントを呼び込み、城・街・駅・道後をつなぐ周遊と道後温泉への再投資"
+          }
+        }
+      ];
+
+      // ---------- questions ----------
+      var QUESTIONS = [
+        {
+          q: "スーパーでレジに並んでいる時、最近いちばん思うのは？",
+          mutter: "まずは、ふだんの買い物のことから。",
+          opts: [
+            { label: "「また値上がりしてる…」とため息が出る", echo: "買い物の値上がりがつらい", add: { wallet: 3 } },
+            { label: "地元のお店には元気でいてほしい", echo: "地元のお店を応援したい", add: { wallet: 1, work: 2, town: 1 } },
+            { label: "とにかく早く帰りたい（忙しい）", echo: "とにかく忙しい", add: { kids: 1, work: 1, cityhall: 1 } },
+            { label: "特に何も思わない", echo: "", add: {} }
+          ]
+        },
+        {
+          q: "朝のバタバタ。いちばん「助けてほしい」のは？",
+          mutter: "なるほど。朝の顔が見えてきました。",
+          opts: [
+            { label: "子どもの預け先。病気の時は特に困る", echo: "子どもの預け先に困っている", add: { kids: 3 } },
+            { label: "通勤や移動がしんどい", echo: "毎日の移動がしんどい", add: { safety: 2, town: 1 } },
+            { label: "自分の体調・健康のことが気になる", echo: "自分の健康が気になる", add: { health: 2 } },
+            { label: "仕事が山積み。もう少し余裕がほしい", echo: "仕事の余裕がほしい", add: { work: 2 } }
+          ]
+        },
+        {
+          q: "休みの日、松山でどう過ごせたら嬉しい？",
+          mutter: "休日の過ごし方、大事です。",
+          opts: [
+            { label: "商店街や駅前をぶらぶら、買い物やカフェ", echo: "まちなかで過ごすのが好き", add: { town: 3 } },
+            { label: "子どもと遊べる場所がもっとほしい", echo: "子どもと遊べる場所がほしい", add: { kids: 2, town: 1 } },
+            { label: "近所が安全で、静かにゆっくりしたい", echo: "近所の安全と静かさが大事", add: { safety: 2, health: 1 } },
+            { label: "お祭りやイベントでにぎやかに", echo: "にぎやかなまちが好き", add: { town: 2, work: 1 } }
+          ]
+        },
+        {
+          q: "家族のことで、いちばん心配なのは？",
+          mutter: "だんだん絞れてきました…。",
+          opts: [
+            { label: "親の介護と、病院のこと", echo: "親の介護と病院が心配", add: { health: 3 } },
+            { label: "子どもの将来と、学校のこと", echo: "子どもの将来が心配", add: { kids: 3 } },
+            { label: "自分の給料と、これからの貯金", echo: "給料と貯金が心配", add: { work: 2, wallet: 1 } },
+            { label: "災害が起きた時、家族を守れるか", echo: "災害のときが心配", add: { safety: 3 } }
+          ]
+        },
+        {
+          q: "市役所にひとこと言えるとしたら？",
+          mutter: "市役所への本音、聞かせてください。",
+          opts: [
+            { label: "手続きがめんどくさい。もっと簡単にして", echo: "手続きを簡単にしてほしい", add: { cityhall: 3 } },
+            { label: "税金、ちゃんと大事に使って", echo: "税金を大事に使ってほしい", add: { cityhall: 2, wallet: 1 } },
+            { label: "もっと松山の良さを外にアピールして", echo: "松山をもっとアピールしてほしい", add: { town: 2, work: 1 } },
+            { label: "市民の声、ちゃんと届いてる？", echo: "市民の声を届けたい", add: { cityhall: 2, safety: 1 } }
+          ]
+        },
+        {
+          q: "松山駅前の再開発、あなたはどっち派？",
+          mutter: "駅前のこと、意見が分かれるところです。",
+          opts: [
+            { label: "家族で過ごせる広場や場所がほしい", echo: "駅前に家族で過ごせる場所がほしい", add: { town: 2, kids: 1 } },
+            { label: "仕事やお店が増える場所にしてほしい", echo: "駅前に仕事やお店を増やしてほしい", add: { work: 2, town: 1 } },
+            { label: "大きな建物より、道路や水道など足元を先に", echo: "大きな建物より足元を先に", add: { safety: 3 } },
+            { label: "とにかく早く決めて、前に進めてほしい", echo: "早く決めて前に進めてほしい", add: { cityhall: 2, town: 1 } }
+          ]
+        },
+        {
+          q: "最後に。4年後の松山、どうなっていたら嬉しい？",
+          mutter: "最後の質問です。これで近い2人を絞ります。",
+          opts: [
+            { label: "給料が上がって、暮らしが少し楽に", echo: "暮らしを少し楽にしたい", add: { work: 3, wallet: 1 } },
+            { label: "子どもを育てやすいまち", echo: "子育てしやすいまちにしたい", add: { kids: 3 } },
+            { label: "病院も防災も「安心」と思えるまち", echo: "安心して暮らしたい", add: { health: 2, safety: 2 } },
+            { label: "にぎやかで、住むのが誇らしいまち", echo: "にぎやかで誇れるまちにしたい", add: { town: 3 } }
+          ]
+        }
+      ];
+
+      // ---------- quiz state ----------
+      var weights = {};
+      var echoes = {};
+      var answers = [];
+      var qi = 0;
+
+      function resetWeights() {
+        weights = {}; echoes = {};
+        TOPICS.forEach(function (t) { weights[t.id] = 0; });
+      }
+      resetWeights();
+
+      function applyAnswers() {
+        resetWeights();
+        answers.forEach(function (oi, idx) {
+          if (oi == null) return;
+          var opt = QUESTIONS[idx].opts[oi];
+          for (var k in opt.add) {
+            weights[k] += opt.add[k];
+            if (opt.echo && (!echoes[k] || opt.add[k] > echoes[k].pts)) {
+              echoes[k] = { text: opt.echo, pts: opt.add[k] };
+            }
+          }
+        });
+      }
+
+      var hero = document.getElementById("hero");
+      var quizSec = document.getElementById("quiz-sec");
+      var quizQ = document.getElementById("quizQ");
+      var quizOpts = document.getElementById("quizOpts");
+      var quizCount = document.getElementById("quizCount");
+      var quizDots = document.getElementById("quizDots");
+      var quizMutter = document.getElementById("quizMutter");
+      var quizBack = document.getElementById("quizBack");
+      var quizMain = document.getElementById("quizMain");
+      var quizThink = document.getElementById("quizThink");
+      var resultSec = document.getElementById("result-sec");
+      var stickyBar = document.getElementById("stickyBar");
+
+      function renderDots() {
+        quizDots.innerHTML = "";
+        for (var i = 0; i < QUESTIONS.length; i++) {
+          var s = document.createElement("span");
+          if (i < qi) s.className = "done";
+          else if (i === qi) s.className = "now";
+          quizDots.appendChild(s);
+        }
+      }
+
+      function showQuestion() {
+        var item = QUESTIONS[qi];
+        quizCount.textContent = "質問 " + (qi + 1) + " / " + QUESTIONS.length;
+        renderDots();
+        quizMutter.textContent = item.mutter;
+        quizQ.textContent = item.q;
+        quizBack.classList.toggle("show", qi > 0);
+        quizOpts.innerHTML = "";
+        item.opts.forEach(function (opt, oi) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "quiz-opt";
+          b.textContent = opt.label;
+          b.addEventListener("click", function () {
+            b.classList.add("picked");
+            answers[qi] = oi;
+            setTimeout(next, 220);
+          });
+          quizOpts.appendChild(b);
+        });
+      }
+
+      function next() {
+        if (qi < QUESTIONS.length - 1) {
+          qi++;
+          showQuestion();
+        } else {
+          finish();
+        }
+      }
+
+      quizBack.addEventListener("click", function () {
+        if (qi > 0) { qi--; showQuestion(); }
+      });
+
+      function startQuiz() {
+        answers = [];
+        qi = 0;
+        resultSec.classList.remove("show");
+        stickyBar.classList.add("hidden");
+        document.body.classList.remove("has-sticky");
+        hero.classList.add("hidden");
+        quizSec.classList.remove("hidden");
+        quizMain.classList.remove("hidden");
+        quizThink.classList.add("hidden");
+        showQuestion();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      document.getElementById("startBtn").addEventListener("click", startQuiz);
+
+      // ---------- thinking, then reveal ----------
+      var THINK_MSGS = [
+        "あなたの答えを集計しています…",
+        "大事にしていることを読み取りました",
+        "3人の公約と見比べています…",
+        "近い順に、2人まで絞り込みました"
+      ];
+      function finish() {
+        applyAnswers();
+        quizMain.classList.add("hidden");
+        quizThink.classList.remove("hidden");
+        var msgEl = document.getElementById("thinkMsg");
+        var i = 0;
+        msgEl.textContent = THINK_MSGS[0];
+        var timer = setInterval(function () {
+          i++;
+          if (i < THINK_MSGS.length) {
+            msgEl.textContent = THINK_MSGS[i];
+          } else {
+            clearInterval(timer);
+            reveal();
+          }
+        }, 750);
+      }
+
+      // ---------- scoring ----------
+      function score(c) {
+        var got = 0, max = 0;
+        TOPICS.forEach(function (t) {
+          var w = weights[t.id] * weights[t.id];
+          got += w * c.scores[t.id];
+          max += w * 5;
+        });
+        return max === 0 ? 0 : Math.round((got / max) * 100);
+      }
+
+      function topTopic() {
+        var best = null, bv = -1;
+        TOPICS.forEach(function (t) {
+          if (weights[t.id] > bv) { bv = weights[t.id]; best = t; }
+        });
+        return best;
+      }
+
+      function reasonsFor(c, limit) {
+        var sorted = TOPICS.filter(function (t) { return weights[t.id] > 0; })
+          .sort(function (a, b) {
+            return weights[b.id] * weights[b.id] * c.scores[b.id] - weights[a.id] * weights[a.id] * c.scores[a.id];
+          })
+          .slice(0, limit || 3);
+        return sorted.map(function (t) {
+          var echo = echoes[t.id] ? echoes[t.id].text : null;
+          var head = echo
+            ? '<span class="echo">「' + echo + "」</span>と答えたあなたに"
+            : "<b>" + t.name + "</b>を大事にするあなたに";
+          return "<li>" + head + " → " + c.short + "さんの約束は、" + c.promises[t.id] + "</li>";
+        }).join("");
+      }
+
+      function candCard(r, rank) {
+        var note = rank === 1 ? "あなたに最も近い" : "次に近い";
+        return (
+          '<div class="cand-card ' + r.c.tile + '">' +
+          '<span class="rank-badge">' + rank + '位 <span class="rank-note">' + note + "</span></span>" +
+          '<div class="chead"><div class="avatar">' + r.c.initial + '</div><div class="c-name">' + r.c.name + " さん</div></div>" +
+          '<p class="c-meta">' + r.c.meta + "</p>" +
+          '<div class="r-match"><span class="num">' + r.s + '<small>%</small></span><span class="lab">マッチ度</span></div>' +
+          '<div class="bar"><div style="width:' + r.s + '%"></div></div>' +
+          '<p class="r-catch">' + r.c.catch + "</p>" +
+          '<div class="r-reasons"><div class="rr-title">近い理由は、あなたの答えにあります</div><ul>' + reasonsFor(r.c, 2) + "</ul></div>" +
+          '<p class="c-pkg">' + r.c.pkg + '<br /><a href="' + r.c.site + '" target="_blank" rel="noopener">' + r.c.siteLabel + "</a></p>" +
+          "</div>"
+        );
+      }
+
+      function diffLine(a, b) {
+        var aBest = null, bBest = null, aDiff = -1, bDiff = -1;
+        TOPICS.forEach(function (t) {
+          if (weights[t.id] === 0) return;
+          var d = a.scores[t.id] - b.scores[t.id];
+          if (d > aDiff) { aDiff = d; aBest = t; }
+          if (-d > bDiff) { bDiff = -d; bBest = t; }
+        });
+        if (aBest && aDiff > 0) return "<b>" + a.name.split(" ")[0] + "さん</b>は「" + aBest.name + "」の約束が手厚く、<b>" + b.name.split(" ")[0] + "さん</b>は「" + (bBest ? bBest.name : aBest.name) + "」で強みが分かれます。あなたがどちらをより大事に思うかが、考えるポイントです。";
+        return "2人の強みは似ています。約束の言い方や進め方の違いを、下の「3人をならべて見る」を開いて見比べてみてください。";
+      }
+
+      function reveal() {
+        quizThink.classList.add("hidden");
+        quizSec.classList.add("hidden");
+        var ranked = CANDS.map(function (c) { return { c: c, s: score(c) }; })
+          .sort(function (a, b) { return b.s - a.s; });
+        var first = ranked[0], second = ranked[1], third = ranked[2], tt = topTopic();
+        var gap = first.s - second.s;
+        var gapNote = gap <= 5
+          ? "マッチ度は僅差（" + gap + "ポイント差）です。どちらもあなたの考えにかなり近いので、甲乙つけがたい結果と言えます。"
+          : gap <= 15
+            ? "マッチ度の差は " + gap + " ポイント。1位がややリードしていますが、2位にもあなたに近い約束があります。"
+            : "マッチ度の差は " + gap + " ポイントありますが、2位の約束の中にも、あなたが大事にしたテーマへの答えが含まれています。";
+
+        document.getElementById("resultCard").innerHTML =
+          '<span class="you-type">あなたは「' + tt.type + "」</span>" +
+          '<p class="r-lead">7つの答えから読み取りました。あなたの考えに近い順に、2人を並べます。</p>' +
+          '<h2 class="r-title">決めるのは、あなたです。<br />ここからは考える時間です。</h2>' +
+          '<p class="gap-note">' + gapNote + "</p>" +
+          '<div class="top2">' + candCard(first, 1) + candCard(second, 2) + "</div>" +
+          '<div class="think-box"><h3>2人で迷うための、3つの問い</h3>' +
+          "<p>" + diffLine(first.c, second.c) + "</p>" +
+          "<ul>" +
+          "<li>あなたの答えで一番強かった「" + tt.name + "」について、2人の約束はどちらが自分の暮らしに近いですか？</li>" +
+          "<li>4年間、市長にいちばん力を入れてほしい仕事はどちら寄りですか？</li>" +
+          "<li>迷いが残っても大丈夫です。その迷いを持ったまま投票に行くこと自体が、考える機会になります。</li>" +
+          "</ul></div>" +
+          '<div class="r-actions">' +
+          '<a class="btn-main" href="https://www.city.matsuyama.ehime.jp/shisei/senkyo/senkyotohyo/kijituzen.html" target="_blank" rel="noopener">投票に行く準備をする</a>' +
+          '<button type="button" class="btn-sub" id="retryBtn">もう一度診断する</button>' +
+          "</div>" +
+          '<p class="r-shot">この結果は「あなたはこの人です」と決めるものではありません。家族やパートナーと1位・2位を見比べると、自分が何を大事にしているか話すきっかけになります。</p>';
+
+        document.getElementById("runners").innerHTML =
+          '<div class="third-line">参考：3位は <b>' + third.c.name + " さん</b>（マッチ度 " + third.s + "%）でした ― " + third.c.one + "</div>";
+
+        resultSec.classList.add("show");
+        stickyBar.classList.remove("hidden");
+        document.body.classList.add("has-sticky");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        document.getElementById("retryBtn").addEventListener("click", startQuiz);
+      }
+
+      // ---------- compare section ----------
+      function dots(n) {
+        var s = "";
+        for (var i = 0; i < 5; i++) s += i < n ? "●" : "○";
+        return s;
+      }
+      document.getElementById("compare").innerHTML = TOPICS.map(function (t) {
+        var rows = CANDS.map(function (c) {
+          return '<div class="cmp-row"><div class="who">' + c.short + "<small>" + dots(c.scores[t.id]) + '</small></div><div>' + c.promises[t.id] + "</div></div>";
+        }).join("");
+        return '<div class="cmp-card"><h3>' + t.name + "</h3>" + rows + "</div>";
+      }).join("");
+
+      // ---------- countdown ----------
+      (function () {
+        var el = document.getElementById("countdown");
+        var vote = new Date(2026, 10, 15);
+        var now = new Date();
+        var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        var d = Math.round((vote - today) / 86400000);
+        if (d > 0) el.textContent = "投票日まで、あと " + d + " 日";
+        else if (d === 0) el.textContent = "今日が投票日です！";
+        else el.textContent = "";
+      })();
+    </script>
+  </body>
+</html>
